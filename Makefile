@@ -28,8 +28,6 @@ help: ## Show this help message
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 
-include $(current_dir)/internal-utils.mk
-
 eq = $(and $(findstring $(1),$(2)),$(findstring $(2),$(1)))
 
 SHELL := /bin/bash
