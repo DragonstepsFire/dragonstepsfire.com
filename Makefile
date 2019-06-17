@@ -1,9 +1,8 @@
 # Set python variables required by package
 OUTPUT_DIR=dist
 REQUIREMENTS=requirements.txt
-SOURCE=crs_normalizer
+SOURCE=publisher
 PACKAGE=true
-OUTPUT_FILENAME=crs-normalizer-layer
 
 # Set default target for make > 3.80
 .DEFAULT_GOAL := default

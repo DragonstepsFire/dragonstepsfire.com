@@ -1,19 +1,15 @@
 language: python
 python:
-  - "3.6"
+  - "3.7"
 env:
   global:
-    - NEWEST_PYTHON=3.6
+    - NEWEST_PYTHON=3.7
 install:
-  - pip install -e .'[test]'
+  - pip install -e .
 script:
-  - make lint
-  - make type-check
-  - make test
-after_success:
-  - |
-    if [[ $TRAVIS_PYTHON_VERSION == $NEWEST_PYTHON ]]; then
-      pip install python-coveralls && coveralls
-    fi
+  - DOCKER=FALSE make lint
+  - DOCKER=FALSE make type-check
+  - DOCKER=FALSE make test
+  - DOCKER=FALSE make coverage
 notifications:
 email: false
