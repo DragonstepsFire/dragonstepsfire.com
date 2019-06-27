@@ -1,3 +1,5 @@
+import tempfile
+from pathlib import Path
 from publisher import publish
 
 import pytest
@@ -6,28 +8,28 @@ from tests import make_test_dir
 
 
 @pytest.mark.parametrize(
-    "test_template_path,substitutions,expected",
+    "test_template_paths,substitutions,expected",
     (
         (
-            make_test_dir([("filename_no_substitution", "")]),
+            [("filename_no_substitution", "")],
             {},
-            make_test_dir([("filename_no_substitution", "")])),
+            [("filename_no_substitution", "")]),
         (
-            make_test_dir([("{{test}}", "")]),
+            [("{{test}}", "")],
             {"test": "translation"},
-            make_test_dir([("translation", "")])),
+            [("translation", "")]),
         (
-            make_test_dir([("{{test}}_{{test_2}}", "")]),
+            [("{{test}}_{{test_2}}", "")],
             {"test": "translation", "test_2": "other"},
-            make_test_dir([("translation_other", "")])),
+            [("translation_other", "")]),
         (
-            make_test_dir([("test", "test")]),
+            [("test", "test")],
             {},
-            make_test_dir([("test", "test")])),
+            [("test", "test")]),
         (
-            make_test_dir([("test", "{{test}}_{{test_2}}")]),
+            [("test", "{{test}}_{{test_2}}")],
             {"test": "translation", "test_2": "other"},
-            make_test_dir([("test", "translation_other")])),
+            [("test", "translation_other")]),
     ),
     ids=[
         "test_file_name_with_no_substitution",
@@ -36,5 +38,12 @@ from tests import make_test_dir
         "test_file_with_no_substitution",
         "test_file_with_substitution",
         ])
-def test_substitution(test_template_path, substitutions, expected):
-    assert False
+def test_substitution(test_template_paths, substitutions, expected):
+    with make_test_dir(test_template_paths) as test_dir:
+        with tempfile.TemporaryDirectory() as target_path:
+            published_dir = publish(test_dir, substitutions, target_path)
+            for file_name, contents in expected:
+                to_test = Path(published_dir, file_name)
+                assert to_test.is_file()
+                with open(to_test) as test_handle:
+                    assert test_handle.read() == contents

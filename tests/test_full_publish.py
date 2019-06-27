@@ -6,5 +6,5 @@ def test_end_to_end():
     # Set variable file
     # Call publish from the CLI
     # assert that structure is what was expected
-    pass
+    assert False
 
