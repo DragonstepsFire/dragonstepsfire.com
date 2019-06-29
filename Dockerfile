@@ -24,6 +24,8 @@ RUN apt update \
 COPY requirements.txt /tmp/requirements.txt
 COPY requirements_dev.txt /tmp/requirements_dev.txt
 
+# TODO: Add htmllint
+# TODO: add csslint
 RUN  pip install --upgrade pip setuptools \
   && pip install -r /tmp/requirements.txt  \
   && pip install -r /tmp/requirements_dev.txt

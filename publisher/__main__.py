@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 
 import click
-from jinja2 import Environment, FileSystemLoader, select_autoescape
+import jinja2
 
 from publisher import publish
 
@@ -25,9 +25,10 @@ dest_path = Path.cwd() / "firelightcircus_site"
 def main(template_dir, target_dir):
     """Console script for firelightcircus.com"""
 
-    env = Environment(
-        loader=FileSystemLoader(template_dir),
-        autoescape=select_autoescape(['html', 'xml']))
+    env = jinja2.Environment(
+        loader=jinja2.FileSystemLoader(template_dir),
+        autoescape=jinja2.select_autoescape(['html', 'xml']),
+        undefined=jinja2.StrictUndefined)
     published_to = publish(env, dest_path)
     click.echo(f"Published to {published_to}")
     return 0
