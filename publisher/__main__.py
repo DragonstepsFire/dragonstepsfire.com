@@ -6,8 +6,9 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from publisher import publish
 
-source_path = Path(__file__).parent / "site_templates"
-dest_path = Path.home() / "firelightcircus_site"
+source_path = Path(__file__).parent / "templates"
+home_dest_path = Path.home() / "firelightcircus_site"
+dest_path = Path.cwd() / "firelightcircus_site"
 
 @click.command()
 @click.option(
@@ -22,7 +23,6 @@ dest_path = Path.home() / "firelightcircus_site"
     default=str(dest_path.absolute()))
 def main(template_dir, target_dir):
     """Console script for firelightcircus.com"""
-    click.echo("See click documentation at http://click.pocoo.org/")
 
     env = Environment(
         loader=FileSystemLoader(template_dir),

@@ -103,3 +103,5 @@ ENV/
 
 # Vim Files
 *.sw*
+
+firelightcircus_site/
