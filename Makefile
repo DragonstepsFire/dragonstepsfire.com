@@ -43,10 +43,7 @@ DOCKER_FILE ?= Dockerfile
 define BROWSER_PYSCRIPT
 import os, webbrowser, sys
 
-try:
-    from urllib import pathname2url
-except:
-    from urllib.request import pathname2url
+from urllib.request import pathname2url
 
 webbrowser.open("file://" + pathname2url(os.path.abspath(sys.argv[1])))
 endef
@@ -131,3 +128,19 @@ type-check: ## Run a type check over all project Type Hints.
 serve-coverage: USE_DOCKER=false
 serve-coverage: htmlcov/index.html ## serve the coverage stats in a browser that are produced by `make coverage`
 	$(BROWSER) htmlcov/index.html
+
+.PHONY: serve-test-site
+serve-test-site: USE_DOCKER=false
+serve-test-site: firelightcircus_site/home.html ## Publish then serve the test website to look at differences.
+	python3.7 serve_test_site.py firelightcircus_site/home.html
+
+# TODO: Create make target that auto-servers and updates test website when
+# files change.
+
+.PHONY: publish
+publish: CMD=$(PYTHON) -m publisher
+publish: ## Run a type check over all project Type Hints.
+	@$(call run,$(CMD))
+
+
+# TODO: promote-to-production

@@ -7,7 +7,8 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from publisher import publish
 
 source_path = Path(__file__).parent / "templates"
-home_dest_path = Path.home() / "firelightcircus_site"
+# TODO: Let users publish to their home directory
+#home_dest_path = Path.home() / "firelightcircus_site"
 dest_path = Path.cwd() / "firelightcircus_site"
 
 @click.command()
@@ -27,9 +28,9 @@ def main(template_dir, target_dir):
     env = Environment(
         loader=FileSystemLoader(template_dir),
         autoescape=select_autoescape(['html', 'xml']))
-    publish(env, dest_path)
+    published_to = publish(env, dest_path)
+    click.echo(f"Published to {published_to}")
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(main())  # pragma: no cover

@@ -25,4 +25,4 @@ def publish(
             template = env.get_template(template_name)
             template_output = template.render()
             output_handle.write(template_output)
-
+    return target_dir 
