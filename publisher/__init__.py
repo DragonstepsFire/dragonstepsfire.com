@@ -13,6 +13,4 @@ __version__ = load_version()
 logging.basicConfig()
 logger = logging.getLogger(__name__) # pylint: disable=invalid-name
 
-from publisher.publisher import publish
-
-__all__ = ["__version__", "publish"]
+__all__ = ["__version__"]

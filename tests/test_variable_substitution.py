@@ -1,6 +1,6 @@
 import tempfile
 from pathlib import Path
-from publisher import publish
+from publisher import publish, create_environment
 
 import pytest
 
@@ -40,8 +40,9 @@ from tests import make_test_dir
         ])
 def test_substitution(test_template_paths, substitutions, expected):
     with make_test_dir(test_template_paths) as test_dir:
-        with tempfile.TemporaryDirectory() as target_path:
-            published_dir = publish(test_dir, substitutions, target_path)
+        with tempfile.TemporaryDirectory() as dest_path:
+            test_environment = create_environment(test_template_paths)
+            published_dir = publish(test_environment, Path(test_dir))
             for file_name, contents in expected:
                 to_test = Path(published_dir, file_name)
                 assert to_test.is_file()
