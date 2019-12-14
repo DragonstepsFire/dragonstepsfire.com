@@ -1,3 +1,6 @@
+"""The publisher package is a light wrapper around jinja2 that's focused on
+produce the Fire Light Circus static media website.
+"""
 import logging
 from pathlib import Path
 

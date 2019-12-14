@@ -1,6 +1,11 @@
+"""This file is essentially a wrapper around jinja2 that loads template files
+with .html, imports macro files with .j2, and renders the html files in the
+output directory with the variables found in `site_config` set as global
+variables available to all .html files
+"""
+# pylint: disable=fixme
 from pathlib import Path
-from typing import Dict, Union
-from ipaddress import IPv4Address, IPv6Address
+from typing import Dict
 
 import jinja2
 import toml
