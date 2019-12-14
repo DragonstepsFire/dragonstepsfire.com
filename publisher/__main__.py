@@ -44,7 +44,7 @@ def main(
     env = create_env(source_path=template_dir)
     template_variables = load_template_variables(site_config, site_url)
     published_to = publish(env, dest_path, template_variables)
-    click.echo(f"Published to {published_to}")
+    click.echo(f"Finished Publishing to '{published_to}'")
     return 0
 
 if __name__ == "__main__":

@@ -6,7 +6,8 @@ import jinja2
 import toml
 
 
-ACCEPTED_EXTENSIONS = (".html", ".j2", ".jinja2")
+#ACCEPTED_EXTENSIONS = (".html", ".j2", ".jinja2")
+ACCEPTED_EXTENSIONS = (".html")
 
 def publish(
         env: jinja2.Environment,
@@ -21,14 +22,16 @@ def publish(
     # organization.
     dest_path.mkdir(parents=True, exist_ok=True)
 
-    for template_name in env.list_templates():
-        if not template_name.endswith(ACCEPTED_EXTENSIONS):
-            continue
-        file_path = Path(dest_path, template_name)
-        with open(file_path, "w") as output_handle:
-            template = env.get_template(template_name)
-            template_output = template.render(**template_variables)
-            output_handle.write(template_output)
+    for template_name in env.list_templates(extensions=ACCEPTED_EXTENSIONS):
+        template_path = Path(dest_path, template_name)
+        template = env.get_template(
+            template_name,
+            globals=env.make_globals(template_variables))
+        template_output = template.render()
+        with open(template_path, "w") as template_file:
+            template_file.write(template_output)
+            print(f"Wrote out '{template_path}'")
+
     return dest_path
 
 def create_env(source_path: Path) -> jinja2.Environment:
