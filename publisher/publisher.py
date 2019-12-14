@@ -6,7 +6,6 @@ import jinja2
 import toml
 
 
-#ACCEPTED_EXTENSIONS = (".html", ".j2", ".jinja2")
 ACCEPTED_EXTENSIONS = (".html")
 
 def publish(
