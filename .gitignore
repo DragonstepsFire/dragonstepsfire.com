@@ -43,6 +43,7 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+test-report.xml
 *.cover
 .hypothesis/
 
@@ -99,3 +100,8 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Vim Files
+*.sw*
+
+firelightcircus_site/
